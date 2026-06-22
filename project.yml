@@ -1,0 +1,15 @@
+name: Elite
+options:
+  bundleId: com.elite.app
+  deploymentTarget:
+    iOS: 15.0
+targets:
+  Elite:
+    type: application
+    platform: iOS
+    sources: [.]
+    info:
+      path: Info.plist
+      plist:
+        CFBundleIdentifier: com.elite.app
+        CFBundleName: Elite
