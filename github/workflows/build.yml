@@ -1,0 +1,28 @@
+name: Build IPA
+on: [push]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies
+        run: brew install xcodegen
+        
+      - name: Generate Project
+        run: xcodegen
+        
+      - name: Build
+        run: |
+          xcodebuild -scheme Elite -destination 'generic/platform=iOS' archive -archivePath Elite.xcarchive
+          
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive -archivePath Elite.xcarchive -exportOptionsPlist exportOptions.plist -exportPath .
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Elite-IPA
+          path: "*.ipa"
